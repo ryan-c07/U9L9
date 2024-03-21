@@ -15,6 +15,7 @@ public class Card {
     private Rectangle cardBox;
     private boolean highlight;
 
+    private ArrayList<Card> deck;
     public Card(String suit, String value) {
         this.suit = suit;
         this.value = value;
@@ -24,6 +25,7 @@ public class Card {
         this.image = readImage();
         this.cardBox = new Rectangle(-100, -100, image.getWidth(), image.getHeight());
         this.highlight = false;
+        this.deck = buildDeck();
     }
 
     public Rectangle getCardBox() {
@@ -106,5 +108,17 @@ public class Card {
             hand.add(c);
         }
         return hand;
+    }
+    public ArrayList<Card> changeCard(ArrayList<Card> previousHand, Card changeCard) {
+        deck = Card.buildDeck();
+        for (int i = 0; i < 9; i++) {
+            deck.remove(previousHand.get(i));
+            if (previousHand.get(i) == changeCard) {
+                int r = (int) (Math.random() * deck.size());
+                Card c = deck.remove(r);
+                previousHand.set(i, c);
+            }
+        }
+        return previousHand;
     }
 }
